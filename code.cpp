@@ -13,63 +13,50 @@ const int       N      = 1e6 + 7;
 const long long oo     = 1e18 + 7;
 const long long MOD    = 1e9 + 7;
 
-int n, m, k;
-vector<ii>adj[N];
+int n, l, r;
+int a[N];
 
-struct dat {
-    int u, v, opt, nonOpt;
-}edge[N];
 
-bool cmp(dat a, dat b) { 
-    return a.nonOpt - a.opt < b.nonOpt - b.opt;
-}
 
-int vis[N];
+namespace sub1 {
+    int prefix[N];
 
-vector<int>d(1002, oo);
-
-void dfs(int u) {
-    for (auto [v, w] : adj[u]) {
-        if (vis[v]) continue;
-        if (d[v] > d[u] + w) {
-            d[v] = d[u] + w;
-            dfs(v);
+    void solve() {
+        for (int i = 1; i <= n; ++i) {
+            prefix[i] = prefix[i - 1] + a[i];
         }
+        int cnt = 0;
+        for (int i = 1; i <= n; ++i) {
+            for (int j = i; j <= n; ++j) {
+                int sum = abs(prefix[j] - prefix[i - 1]);
+                if (sum >= l && sum <= r) {
+                    ++cnt;
+                }
+            }
+        }
+        cout << cnt << endl;
     }
 }
+
+namespace sub2
+{
+    int compress[N];
+    void solve() {
+        for (int i = 1; i <= n; ++i) {
+            compress[i] = a[i];
+            
+        }
+    }   
+} // namespace sub2
+
 
 void solve() {
    //Trie's solution here
-    cin >> n >> m >> k;
-    
-    for (int i = 1; i <= m; ++i) {
-        int u, v, w, q; cin >> u >> v >> w >> q;
-        edge[i] = {u, v, w, q};
-    }
-
-    sort(edge + 1, edge + 1 + m, cmp);
-
-    for (; k; k--) {
-        int s, t; cin >> s >> t;
-        int ans = oo;
-        d.assign(n + 10, oo);
-        for (int i = 1; i <= m; ++i) {
-            auto [u, v, opt, nonOpt] = edge[i];
-            adj[u].push_back({v, opt});
-            adj[v].push_back({u, opt});
-            //priority_queue<ii, vector<ii>, greater<ii>>pq;
-            d[s] = 0;
-            dfs(v);
-            dfs(u);
-            ans = min(ans, d[t] + nonOpt - opt);
-        }
-        d.assign(n + 10, oo);
-        cout << ans << endl;
-        for (int i = 1; i <= n; ++i) adj[i].clear();
-    }
+    cin >> n >> l >> r;
+    for (int i = 1; i <= n; ++i) cin >> a[i];
+    if (n <= 1000) sub1::solve();
+    else sub2::solve();
 }
-
-
 
 #define TASK "test"
 
