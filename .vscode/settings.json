@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "tuple": "cpp",
+        "random": "cpp",
+        "cmath": "cpp",
+        "array": "cpp",
+        "memory": "cpp",
+        "format": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "functional": "cpp",
+        "utility": "cpp",
+        "variant": "cpp"
+    }
+}
